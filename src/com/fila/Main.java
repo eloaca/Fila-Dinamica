@@ -23,16 +23,16 @@ public class Main {
 			System.out.println("Digite o numero: ");
 			valor = leitura.nextInt();
 			
-			f.insereItem(valor);
+			f.enqueue(valor);
 			i++;
 		}
 		
 		System.out.println("Esta é sua fila\n");
 		
 		// desemfileirar
-		while (!f.isVazia()) {
+		while (!f.isEmpty()) {
 			System.out.println("" +f.getItem());
-			f.removeItem();
+			f.dequeue();;
 		}
 		
 	}
