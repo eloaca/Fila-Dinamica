@@ -11,75 +11,141 @@ public class Main {
 		Scanner leitura = new Scanner (System.in);
 		
 		// Instanciar a Fila
-		Fila<Double> f = new Fila();
-		Fila<Double> aux = new Fila ();
-		Fila<Double> f2 = new Fila();
+		Fila<Integer> f1 	= new Fila();
+		Fila<Integer> aux 	= new Fila();
+		Fila<Integer> f2 	= new Fila();
+	
+		// tamanho da fila 
+		System.out.println("Ola. Defina o tamanho da fila: ");
+		int tamanho = leitura.nextInt();
 		
 		// contador
 		int i = 0;
 		
-		Double valor = 0.0;
-
-		/*
-		// enfileirar
-		while (i < 6) {
-			System.out.println("Digite o numero: ");
-			valor = leitura.nextDouble();
-
-			f.enqueue(valor);
+		// variavel para enfileirar
+		int ordem  	= 0;
+		int num		= 0;
+		
+		// enfileirar numero e ordem
+		while (!(i == tamanho)) {
+			System.out.println ("Insira a ordem: "+(i+1));
+			ordem = leitura.nextInt();
+			f1.enqueue(ordem);
+			
+			System.out.println("Insira o º"+(i+1)+" numero");
+			num = leitura.nextInt();
+			f1.enqueue(num);
+			
 			i++;
 		}
-		*/
-		f.enqueue(5.6);
-		f.enqueue(7.8);
-		f.enqueue(1.3);
-		f.enqueue(3.2);
-		f.enqueue(4.0);
-		f.enqueue(2.5);
 		
-		while (!f.isEmpty()) {
+		// zerar o contador
+		i = 0;
+		
+
+		// primeiro da fila 
+		int a = 0;
+		int b = 0;
+		
+		int c = 0;
+		int d = 0;
+		
+		int t = 0;
+		
+		
+		
+		while (!f1.isEmpty()) {
+									
+			a = f1.getItem();
+			f1.dequeue();
+			b = f1.getItem();
+			f1.dequeue();
 			
-			// Logica
-			double primeiroF = f.getItem();
-			f.dequeue();
-			aux.enqueue(primeiroF);
-			double primeiroA = aux.getItem();
+			f2.enqueue(a);
+			f2.enqueue(b);
+			
 			i = 0;
+			t = f1.getSize()/2;
 			
-			while (!(i == f.getSize())) {
-				primeiroF = f.getItem();
-				f.dequeue();
+						
+			while (i < t) {
 				
-				primeiroA = aux.getItem();
-				aux.dequeue();
+				a = f1.getItem();
+				f1.dequeue();
+				b = f1.getItem();
+				f1.dequeue();
 				
-				if (primeiroF > primeiroA) {
+				/*if (i >= 1) {
+					f2.enqueue(a);
+					f2.enqueue(b);
+				}*/
+				
+				c = f2.getItem();
+				f2.dequeue();
+				d = f2.getItem();
+				f2.dequeue();
+				
+				if (a < c) {
 					
-					f.enqueue(primeiroF);
-					aux.enqueue(primeiroA);
+					f1.enqueue(c);
+					f1.enqueue(d);
+
+					f2.enqueue(a);
+					f2.enqueue(b);
+					
 				}
-				else {
-					aux.enqueue(primeiroF);
-					f.enqueue(primeiroA);
+				else if (a > c) {
+					
+					f1.enqueue(a);
+					f1.enqueue(b);
+
+					f2.enqueue(c);
+					f2.enqueue(d);
+				}
+				
+				else if (a == c) {
+					
+					if (b > d) {
+						
+						f1.enqueue(a);
+						f1.enqueue(b);
+						
+						f2.enqueue(c);
+						f2.enqueue(d);
+					}
+					else if (b < d) {
+						
+						f1.enqueue(c);
+						f1.enqueue(d);
+
+						f2.enqueue(a);
+						f2.enqueue(b);
+					}
+					else if (b == d) {
+						
+						f2.enqueue(a);
+						f2.enqueue(b);
+						
+						f2.enqueue(c);
+						f2.enqueue(d);
+					}
 				}
 				i++;
-				
 			}
-			primeiroA = aux.getItem();
-			f2.enqueue(primeiroA);
-			
-			while (!aux.isEmpty())
-				aux.dequeue();
+			while (!f2.isEmpty()) {
+				int x = f2.getItem();
+				aux.enqueue(x);
+				f2.dequeue();
+			}
 		}
-		
-		System.out.println("Esta é sua fila\n");
+
 		
 		// desemfileirar
-		while (!f2.isEmpty()) {
-			System.out.println("" +f2.getItem());
-			f.dequeue();
+		System.out.println("\nEssa é sua fila ");
+		while (!aux.isEmpty()) {
+			System.out.println("" +aux.getItem());
+				aux.dequeue();
 		}
 		
 	}
-
 }
