@@ -10,8 +10,9 @@ public class Main {
 	 * @throws Exception
 	 */
 	
-	//Exercício 2. Criar um programa que permita inserir um elemento depois do 
-	//enésimo elemento de uma fila
+	/*	Exercício 1. Faça um programa que receba duas filas Q1 e Q2 e gere uma terceira fila Q3
+	contendo a união dos elementos de Q1 e Q2 sem repetição. As filas Q1 e Q2 devem ser
+	mantidas */
 	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
@@ -20,96 +21,83 @@ public class Main {
 		Scanner leitura = new Scanner (System.in);
 		
 		// Instanciar a Fila
-		Fila<Integer> f = new Fila();
-		Fila<Integer> aux = new Fila();
+		Fila<Integer> q1 = new Fila();
+		Fila<Integer> q2 = new Fila();
+		Fila<Integer> q3 = new Fila();
 		
 		int i = 0;
 		
 		// entrada
 		int valor = 0;
 		
-		System.out.println ("Ola usuário. Qual é o tamanho da sua fila ? ");
+		System.out.println ("Ola usuário. Qual é o tamanho da sua fila Q1? ");
 		int tamanho = leitura.nextInt();
 		
-		// enfileirar
+		// enfileirar q1
 		while (i < tamanho) {
-			System.out.println("Digite o numero: ");
+			System.out.println("Digite o º"+(i+1)+" numero da fila Q1: ");
 			valor = leitura.nextInt();
 			
-			f.enqueue(valor);
+			q1.enqueue(valor);
+			q3.enqueue(valor);
 			i++;
 		}
 		
 		// reiniciar contador 
 		i = 0;
 		
-		// criar um novo contador
-		int c = 1;
-		
-		// numero a adicionar
-		System.out.println ("Qual numero voce deseja adicionar ? ");
-		valor = leitura.nextInt();
-		
-		// posicao a considerar
-		System.out.println ("Qual posicao da fila voce deseja colocar o numero ");
-		int posicao = leitura.nextInt();
-		
-		// Pegar o tamanho da filha
-		tamanho = f.getSize();
+		// tamanho fila Q2
+		System.out.println ("Ola usuário. Qual é o tamanho da sua fila Q2? ");
+		tamanho = leitura.nextInt();
 
-		// Ele pode adicionar no final da fila mas nao mais que isso
-		if (posicao > tamanho+1 || posicao < 0) {
-			System.err.println("Nao é possivel inserir nessa posicao. ");
-			System.exit(0);
-		}
-		
-		//Se ele quiser adicionar no fim da fila, ja adiciona direto
-		if (posicao == tamanho+1) {
-			f.enqueue(valor);
-		}
-		else if (posicao == 1) {
-			while (!f.isEmpty()) {
-				int primeiro = f.getItem();
-				aux.enqueue(primeiro);
-				f.dequeue();
-			} //final do while fila vazia
-			f.enqueue(valor);
-			i++; // 
-		}
-		else { // se ele quiser adicionar em outra posicao, precisa entrar no while  
-			while (!(c == posicao)) {
-				int primeiro = f.getItem();
-				aux.enqueue(primeiro);
-				f.dequeue();
-				c++;
-				tamanho = f.getSize();
-				
-			} // final do while comparacao
-			aux.enqueue(valor);
-		
-			while (!f.isEmpty()) {
-				int primeiro = f.getItem();
-				aux.enqueue(primeiro);
-				f.dequeue();
-			} //final do while fila vazia
+		//enfileirar q2
+		while (i < tamanho) {
+			System.out.println("Digite o º"+(i+1)+" numero da fila Q2: ");
+			valor = leitura.nextInt();
+					
+			q2.enqueue(valor);
+			q3.enqueue(valor);
 			i++;
-		} // final do elseif
+		}
 		
-		// entrar nessa condicao se i for maior que 1
-		if (i > 0) {
-			while (!aux.isEmpty()) {
-				int primeiro = aux.getItem();
-				f.enqueue(primeiro);
-				aux.dequeue();
-			}
-		} // final do while aux vazia
-
+		for (i = 0; i < q3.getSize(); i++) {
+			
+			int a = q3.getItem();
+			q3.dequeue();
+			
+			for (int j = 0; j < q3.getSize(); j++) {
 				
+				 int b = q3.getItem();
+				 
+				 if (a == b)
+					 q3.dequeue();
+				 else {
+					 q3.enqueue(b);
+					 q3.dequeue();
+				 }
+			}
+			q3.enqueue(a);
+		}
+		
+		// desemfileirar Q3
+		System.out.println("Esta é sua fila Q3 \n");
+		while (!q3.isEmpty()) {
+			System.out.println("" +q3.getItem());
+			q3.dequeue();
+		}	
+		
 		// desemfileirar
-		System.out.println("Esta é sua fila: \n");
-		while (!f.isEmpty()) {
-			System.out.println("" +f.getItem());
-			f.dequeue();;
+		System.out.println("Esta é sua fila Q2 \n");
+		while (!q2.isEmpty()) {
+			System.out.println("" +q2.getItem());
+			q2.dequeue();
+		}	
+		
+		// desemfileirar
+		System.out.println("Esta é sua fila Q1 \n");
+		while (!q1.isEmpty()) {
+			System.out.println("" +q1.getItem());
+			q1.dequeue();
 		}	
 	}
 }
